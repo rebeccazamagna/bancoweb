@@ -14,7 +14,7 @@ public class SaqueRequestDto {
 
     @NotBlank
     @NotNull
-    private String numeroConta;
+    private Long numeroConta;
 
     @NotBlank
     @NotNull

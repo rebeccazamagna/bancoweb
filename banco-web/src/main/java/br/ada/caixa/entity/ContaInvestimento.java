@@ -9,6 +9,6 @@ import javax.persistence.Entity;
 @Getter
 @Setter
 @Entity
-@DiscriminatorValue("Conta_Corrente")
-public class ContaCorrente extends Conta {
+@DiscriminatorValue("Conta_Investimento")
+public class ContaInvestimento extends Conta {
 }

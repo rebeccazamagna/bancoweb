@@ -16,7 +16,6 @@ import java.util.Optional;
 public abstract class ContaService {
     private final ContaRepository contaRepository;
 
-    private static final double TRANSACTION_FEE = 0.005;
 
     @Transactional(readOnly = true)
     public List<Conta> findAll() {
@@ -55,13 +54,6 @@ public abstract class ContaService {
         Conta conta = findContaById(id)
                 .orElseThrow(() -> new Exception("Conta not found"));
         BigDecimal novoSaldo = conta.getSaldo().subtract(amount);
-        if (conta.getCliente().getTipo().equalsIgnoreCase("PJ")) {
-            BigDecimal transactionFee = TRANSACTION_FEE.multiply(amount);
-            novoSaldo = novoSaldo.subtract(transactionFee);
-        }
-        if (novoSaldo.compareTo(BigDecimal.ZERO) < 0) {
-            throw new Exception("Insufficient balance");
-        }
         conta.setSaldo(novoSaldo);
         contaRepository.save(conta);
     }
@@ -83,12 +75,6 @@ public abstract class ContaService {
                 .map(conta -> {
                     BigDecimal amountBigDecimal = BigDecimal.valueOf(amount);
                     BigDecimal newFromBalance = conta.getSaldo().subtract(amountBigDecimal);
-                    if (conta.getCliente().getTipo().equals("PJ")) {
-                        newFromBalance = newFromBalance.subtract(BigDecimal.valueOf(TRANSACTION_FEE).multiply(amountBigDecimal));
-                    }
-                    if (newFromBalance.compareTo(BigDecimal.ZERO) < 0) {
-                        throw new RuntimeException("Saldo insuficiente");
-                    }
                     conta.setSaldo(newFromBalance);
                     return conta;
                 })

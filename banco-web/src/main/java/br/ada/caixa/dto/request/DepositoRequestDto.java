@@ -13,7 +13,7 @@ public class DepositoRequestDto {
 
     @NotNull
     @NotBlank
-    private String numeroConta;
+    private Long numeroConta;
 
     @NotNull
     @NotBlank

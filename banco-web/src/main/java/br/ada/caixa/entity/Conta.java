@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name="tipo_conta", discriminatorType = DiscriminatorType.STRING, length = 10)
 public class Conta {
 
     @Id
@@ -21,7 +20,6 @@ public class Conta {
     private BigDecimal saldo;
 
     @ManyToOne
-    @JoinColumn(name = "cliente_id")
     private Cliente cliente;
     public Conta() {
         this.dataCriacao = LocalDateTime.now();

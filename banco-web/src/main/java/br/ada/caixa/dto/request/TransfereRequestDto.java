@@ -13,12 +13,10 @@ import java.math.BigDecimal;
 public class TransfereRequestDto {
 
     @NotNull
-    @NotBlank
-    private String numeroContaOrigem;
+    private Long numeroContaOrigem;
 
     @NotNull
-    @NotBlank
-    private String numeroContaDestino;
+    private Long numeroContaDestino;
 
     @NotNull
     @NotBlank
@@ -35,4 +33,6 @@ public class TransfereRequestDto {
                 ", valor=" + valor +
                 '}';
     }
+
+
 }

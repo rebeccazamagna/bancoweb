@@ -5,9 +5,13 @@ import br.ada.caixa.dto.request.DepositoRequestDto;
 import br.ada.caixa.dto.request.SaqueRequestDto;
 import br.ada.caixa.dto.request.TransfereRequestDto;
 import br.ada.caixa.dto.response.SaldoResponseDto;
+import br.ada.caixa.service.OperacoesBancariasService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+
 
 import java.math.BigDecimal;
 
@@ -15,35 +19,30 @@ import java.math.BigDecimal;
 @RequestMapping("/operacoes")
 public class OperacoesBancariasController {
 
+    @Autowired
+    private OperacoesBancariasService service;
+
     @PostMapping("/deposito")
     public void depositar(@RequestBody DepositoRequestDto depositoRequestDto) {
-        System.out.println(depositoRequestDto);
+        service.depositar(depositoRequestDto);
     }
 
     @PostMapping("/saque")
     public void sacar(@RequestBody SaqueRequestDto saqueRequestDto) {
-        System.out.println(saqueRequestDto);
+        service.sacar(saqueRequestDto);
     }
 
     @PostMapping("/transfere")
     public void transferir(@RequestBody TransfereRequestDto transfereRequestDto) {
-        System.out.println(transfereRequestDto);
+        service.transferir(transfereRequestDto);
     }
 
     @GetMapping("/saldo/{numeroConta}")
     public ResponseEntity<SaldoResponseDto> consultarSaldo(@PathVariable String numeroConta) {
-        System.out.println("numeroConta = " + numeroConta);
-
-        SaldoResponseDto saldoResponseDto = new SaldoResponseDto();
-        saldoResponseDto.setNumeroConta(numeroConta);
-        saldoResponseDto.setSaldo(BigDecimal.valueOf(220.00));
-
+        SaldoResponseDto saldoResponseDto = service.consultarSaldo(Long.valueOf(numeroConta));
         return ResponseEntity.status(HttpStatus.OK).body(saldoResponseDto);
     }
 
-    @PostMapping("/investimento")
-    public void investir() {
 
-    }
 
 }
